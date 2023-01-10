@@ -1,36 +1,46 @@
-import json
+import json, io, base64, re
 import plotly
 import pandas as pd
+from collections import Counter
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
 
 from flask import Flask
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, send_file
 from plotly.graph_objs import Bar
-from sklearn.externals import joblib
+import joblib
+#from sklearn.externals import joblib
 from sqlalchemy import create_engine
 
+stop_words = stopwords.words("english")
 
 app = Flask(__name__)
 
 def tokenize(text):
+    text = re.sub(r'[^a-zA-Z0-9]', ' ', text.lower())
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
     clean_tokens = []
     for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
+        if tok not in stop_words:
+            clean_tok = lemmatizer.lemmatize(tok).strip()
+            clean_tokens.append(clean_tok)
 
     return clean_tokens
 
+
 # load data
-engine = create_engine('sqlite:///../data/YourDatabaseName.db')
-df = pd.read_sql_table('YourTableName', engine)
+engine = create_engine('sqlite:///../data/DisasterResponse.db')
+df = pd.read_sql_table('messages', engine)
+
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("../models/classifier.pk")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -42,6 +52,11 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+
+    label_vectors = df.select_dtypes(include=['int64']).iloc[:,1:]
+    label_counts = label_vectors.sum(axis=0).sort_values(ascending=False)
+    labels_proportion = (label_counts/len(label_vectors)*100).round(1)
+    label_names = label_vectors.columns.tolist()
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -63,15 +78,49 @@ def index():
                     'title': "Genre"
                 }
             }
-        }
+        },
+        {
+            'data': [
+                Bar(
+                    x=label_names,
+                    y=labels_proportion
+                )
+            ],
+
+            'layout': {
+                'title': 'Share of Classification Labels in dataset ("related" excluded)',
+                'yaxis': {
+                    'title': "percentage of labels in dataset"
+                },
+                'xaxis': {
+                    'title': None
+                }
+            }
+        },
+
     ]
     
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     
+    counter=Counter()
+    [counter.update(tokenize(m)) for m in df.message]
+    
+    cloud = WordCloud(  stopwords = stop_words, 
+                        background_color = 'black',
+                        width=2000, height=1000
+                        ).generate_from_frequencies(frequencies=counter)
+    #plt.title('Dataset worldcloud - Size propoerional to word frequency')
+    plt.imshow(cloud, interpolation="bilinear")
+    #plt.axis('off')
+    img = io.BytesIO()
+    cloud.to_image().save(img, 'PNG')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode('utf8')
+
     # render web page with plotly graphs
-    return render_template('master.html', ids=ids, graphJSON=graphJSON)
+    return render_template('master.html', ids=ids, graphJSON=graphJSON, plot_url=plot_url)
 
 
 # web page that handles user query and displays model results
