@@ -53,6 +53,7 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
 
+    # prepare class imbalance visual from dataset
     label_vectors = df.select_dtypes(include=['int64']).iloc[:,1:]
     label_counts = label_vectors.sum(axis=0).sort_values(ascending=False)
     labels_proportion = (label_counts/len(label_vectors)*100).round(1)
@@ -104,6 +105,7 @@ def index():
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     
+    # prepare wordcloud from dataset messages
     counter=Counter()
     [counter.update(tokenize(m)) for m in df.message]
     
@@ -111,9 +113,7 @@ def index():
                         background_color = 'black',
                         width=2000, height=1000
                         ).generate_from_frequencies(frequencies=counter)
-    #plt.title('Dataset worldcloud - Size propoerional to word frequency')
     plt.imshow(cloud, interpolation="bilinear")
-    #plt.axis('off')
     img = io.BytesIO()
     cloud.to_image().save(img, 'PNG')
     img.seek(0)
