@@ -1,0 +1,11 @@
+pandas
+scikit-learn
+nltk
+sqlalchemy
+xgboost
+nlpaug
+plotly
+matplotlib
+worldcloud
+pillow
+flask
