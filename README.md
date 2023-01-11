@@ -6,8 +6,8 @@
 
 This is the second project of [Udacity's Data Scientist Nanodegree](https://www.udacity.com/course/data-scientist-nanodegree--nd025).
 The project's objective is design a ML application supporting Disaster Emergency Response API. Tha app is composed of the following:
-    - front-end API where disaster messages can be submitted for classification inference
-    - back-end leveraging a trained classifier model. The model tags the message along 36 different labels such as 'Food', 'Water', 'Medical support', 'Request (for)'
+- front-end API where disaster messages can be submitted for classification inference
+- back-end leveraging a trained classifier model. The model tags the message along 36 different labels such as 'Food', 'Water', 'Medical support', 'Request (for)'
 The app therefore allows to redirect messages to the appropriate first-line emergency response bodies.
 
 2. Dataset used for model training
@@ -23,6 +23,7 @@ The datasets used for training the model has been provided by [Appen](https://ww
 
 
 4. Class imbalance issue
+
 The dataset has a large class imbalance with the 4 top labels representing over 95% of the messages. This is detrimental during training step since a model will see a majority of these top class samples and much less from those under-represented. The error rate on these under-represented classes is expected to be high. Trained model performance is therefore measured on each of the 36 classes.
 
 ![](./assets/class_imbalance.png)
@@ -41,6 +42,7 @@ An alternative to data augmentation would be to use a reduce dataset with equal 
 
 
 5. Training step:
+
 During preparation, XGBoost demonstrated higher performance compared to ramdomforest. GridSearchCV was performed but with minimal improvement over standard parameters. Several feature engineering approaches were tested with minimal performance improvements:
     - length of the message
     - use of `genre` categorical variable. each message has this information. There are 3 sources: 'news', 'social' or 'direct'. I would have expected this could add classification information but the data analysis performed during ETL did not show any particular correlation with specific labels.
