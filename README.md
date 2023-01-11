@@ -6,14 +6,14 @@
 
 This is the second project of [Udacity's Data Scientist Nanodegree](https://www.udacity.com/course/data-scientist-nanodegree--nd025).
 The project's objective is design a ML application supporting Disaster Emergency Response API. Tha app is composed of the following:
-- front-end API where disaster messages can be submitted for classification inference
-- back-end leveraging a trained classifier model. The model tags the message along 36 different labels such as 'Food', 'Water', 'Medical support', 'Request (for)'
+    - front-end API where disaster messages can be submitted for classification inference
+    - back-end leveraging a trained classifier model. The model tags the message along 36 different labels such as 'Food', 'Water', 'Medical support', 'Request (for)'
 The app therefore allows to redirect messages to the appropriate first-line emergency response bodies.
 
 2. Dataset used for model training
 The datasets used for training the model has been provided by [Appen](https://www.figure-eight.com/) (formally Figure 8). The datasets are composed of :
-- a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
-- a categories dataset tagging each message along 36 labels (classification classes).
+    - a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
+    - a categories dataset tagging each message along 36 labels (classification classes).
 
 
 3. Architecture of the project
@@ -31,7 +31,7 @@ To minimize this issue, data augmentation was performed on the labels with less 
 
 Original:
 - `UN reports Leogane 80-90 destroyed. Only Hospital St. Croix functioning. Needs supplies desperately.`
-- 
+
 Augmented Text:
 - `united nations reports Leogane fourscore - 90 destroyed. But Infirmary St. Croix functioning. Needs supplies desperately.`
 - `united nations account Leogane eighty - ninety destroyed. Solely Infirmary St. Croix functioning. Needs supplies desperately.`
@@ -40,18 +40,18 @@ Augmented Text:
 An alternative to data augmentation would be to use a reduce dataset with equal proportion of labels. However since some labels have so few samples, this would imply reducing the dataset a lot resulting in the loss of massive training information.
 
 
-5. Training step
+5. Training step:
 During preparation, XGBoost demonstrated higher performance compared to ramdomforest. GridSearchCV was performed but with minimal improvement over standard parameters. Several feature engineering approaches were tested with minimal performance improvements:
-- length of the message
-- use of `genre` categorical variable. each message has this information. There are 3 sources: 'news', 'social' or 'direct'. I would have expected this could add classification information but the data analysis performed during ETL did not show any particular correlation with specific labels.
-- messages starting with a verb
+    - length of the message
+    - use of `genre` categorical variable. each message has this information. There are 3 sources: 'news', 'social' or 'direct'. I would have expected this could add classification information but the data analysis performed during ETL did not show any particular correlation with specific labels.
+    - messages starting with a verb
 
 The data augmentation improved performance significantly on the under-represented classes.
 
 The training pipeline was therefore composed of:
-- data augmentation on less represented classes
-- tokenization and vectorization using tfIdf. paramters were set at min 3 occurences and lax 10,000 features to prevent memory issues and reduce training time without noticeable performance deterioration
-- GridSearch hyperparameter tuning (n_estimators, max_depth)
+    - data augmentation on less represented classes
+    - tokenization and vectorization using tfIdf. paramters were set at min 3 occurences and lax 10,000 features to prevent memory issues and reduce training time without noticeable performance deterioration
+    - GridSearch hyperparameter tuning (n_estimators, max_depth)
 
 Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with data augmentation (last column to the right).
 
@@ -60,9 +60,9 @@ Below is the overview of model performance in the various testing conditions. Sa
 
 6. Front-end API
 The front-end displays some insights extratced from the dataset.
-- wordcloud using most frequent words in the messages dataset. I used my tokenization step from production.
-- class imbalance overview
-- message inference (illustration below)
+    - wordcloud using most frequent words in the messages dataset. I used my tokenization step from production.
+    - class imbalance overview
+    - message inference (illustration below)
 
 ![](./assets/message_inference.png)
 
