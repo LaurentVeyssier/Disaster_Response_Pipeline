@@ -98,7 +98,7 @@ The training pipeline was therefore composed of:
 - GridSearch hyperparameter tuning (n_estimators, max_depth)
 - Training for Multi-label Classification task. In this type of classification problem the target variable has more than one dimension where each dimension is binary i.e. contain only two distinct values (0 or 1).
 
-Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with 5 data augmentation steps (last column to the right).
+Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with 5 data augmentation steps (last column to the right). The model achieves **above 80% unweighted F1 score on nearly all labels**.
 
 ![](./assets/fine-tuning.png)
 
