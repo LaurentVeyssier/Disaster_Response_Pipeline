@@ -15,10 +15,12 @@ The datasets used for training the model has been provided by [Appen](https://ww
 - a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
 - a categories dataset tagging each message along 36 labels (classification classes).
 
+
 3. Architecture of the project
     - ETL pipeline: Loads the datasets, merges and clean data, stores in SQLite database
     - ML pipeline: Loads data from SQLite database. Segregate into train and test sets, Builds a text processing and machine learning pipeline, trains and fine-tunes a model using GridSearchCV, evaluates model performance and export final model as pickle file
     - Flask Web App: The flask app provides a classification inference API using the trained model
+
 
 4. Class imbalance issue
 The dataset has a large class imbalance with the 4 top labels representing over 95% of the messages. This is detrimental during training step since a model will see a majority of these top class samples and much less from those under-represented. The error rate on these under-represented classes is expected to be high. Trained model performance is therefore measured on each of the 36 classes.
@@ -29,12 +31,14 @@ To minimize this issue, data augmentation was performed on the labels with less 
 
 Original:
 - `UN reports Leogane 80-90 destroyed. Only Hospital St. Croix functioning. Needs supplies desperately.`
+- 
 Augmented Text:
 - `united nations reports Leogane fourscore - 90 destroyed. But Infirmary St. Croix functioning. Needs supplies desperately.`
 - `united nations account Leogane eighty - ninety destroyed. Solely Infirmary St. Croix functioning. Needs supplies desperately.`
 - `UN reports Leogane eighty - ninety destroyed. Only Infirmary St. Croix operate. Needs provision desperately.`
 
 An alternative to data augmentation would be to use a reduce dataset with equal proportion of labels. However since some labels have so few samples, this would imply reducing the dataset a lot resulting in the loss of massive training information.
+
 
 5. Training step
 During preparation, XGBoost demonstrated higher performance compared to ramdomforest. GridSearchCV was performed but with minimal improvement over standard parameters. Several feature engineering approaches were tested with minimal performance improvements:
@@ -53,6 +57,7 @@ Below is the overview of model performance in the various testing conditions. Sa
 
 ![](./assets/fine-tuning.png)
 
+
 6. Front-end API
 The front-end displays some insights extratced from the dataset.
 - wordcloud using most frequent words in the messages dataset. I used my tokenization step from production.
@@ -61,8 +66,10 @@ The front-end displays some insights extratced from the dataset.
 
 ![](./assets/message_inference.png)
 
+
 7. Environment set-up
 The project runs in a virtual environment using python 3.8 and the python packages provided in the requirements.txt file
+
 
 8. Instructions
     1. Run the following commands in the project's root directory to set up your database and model.
