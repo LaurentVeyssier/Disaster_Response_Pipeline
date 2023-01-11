@@ -55,11 +55,25 @@ def load_data(database_filepath, augmentation=True):
 
 
 def data_augmentation(dataframe):
+    """
+    performs n epochs of data augmentation using NLPaug package
+    on labels with less than 1000 samples in the dataset
+    parameters set within this function:
+        - threshold of samples below which to apply data augmentation (ie 1000)
+        - n_augmentation_steps = number of new samples to get for each sample
+    inputs:
+        - dataframe to augment
+    outputs:
+        - augmented dataframe with the new samples added
+    """
     # select classification labels with less than 1000 samples
     labels = dataframe.select_dtypes(include=['int64']).columns.tolist()
     sorted_labels = dataframe[labels].sum(axis=0).sort_values().index
     under_represented_labels = sorted_labels[dataframe[labels].sum(
         axis=0).sort_values() < 1000]
+
+    # defines the number of augmentation epochs
+    n_augmentation_steps = 5
 
     # perform data augmentation on under-represented classes
     new_rows = []
@@ -67,14 +81,18 @@ def data_augmentation(dataframe):
         axis=1) == 1, :]
     for idx, row in df_to_augment.iterrows():
         sample = row['message']
-        augmented_text = aug.augment(sample)
-        new_row = row.copy()
-        new_row['message'] = augmented_text[0]
-        new_rows.append(new_row)
+        # produces n augmentation samples
+        augmented_text = aug.augment(sample, n=n_augmentation_steps)
+        for i in range(n_augmentation_steps):
+            new_row = row.copy()
+            new_row['message'] = augmented_text[i]
+            new_rows.append(new_row)
 
-    # combine new augmented rows with existing dataset
+    # adds new samples to dataset
     augmented_df = pd.DataFrame(new_rows)
     augmented_df = pd.concat([dataframe, augmented_df], axis=0)
+    # eliminates potential duplicates generated during augmentation epochs
+    augmented_df.drop_duplicates(inplace=True)
     augmented_df.reset_index(drop=True, inplace=True)
     return augmented_df
 
