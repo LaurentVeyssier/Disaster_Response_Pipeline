@@ -22,6 +22,8 @@ The datasets used for training the model has been provided by [Appen](https://ww
     - ML pipeline: Loads data from SQLite database. Segregate into train and test sets, Builds a text processing and machine learning pipeline, trains and fine-tunes a model using GridSearchCV, evaluates model performance and export final model as pickle file
     - Flask Web App: The flask app provides a classification inference API using the trained model
 
+The project folder structure is as follows:
+
 ```
 │   README.md
 │   requirements.txt
