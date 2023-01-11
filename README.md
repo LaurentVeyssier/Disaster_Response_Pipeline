@@ -22,6 +22,46 @@ The datasets used for training the model has been provided by [Appen](https://ww
     - ML pipeline: Loads data from SQLite database. Segregate into train and test sets, Builds a text processing and machine learning pipeline, trains and fine-tunes a model using GridSearchCV, evaluates model performance and export final model as pickle file
     - Flask Web App: The flask app provides a classification inference API using the trained model
 
+'''
+│   .gitignore
+│   categories.csv
+│   commands.docx
+│   ETL Pipeline Preparation.ipynb
+│   LICENSE
+│   messages.csv
+│   ML Pipeline Preparation.ipynb
+│   README.md
+│   requirements.txt
+│   Twitter-sentiment-self-drive-DFE.csv
+│
+├───.ipynb_checkpoints
+│       ML Pipeline Preparation-checkpoint.ipynb
+│
+├───app
+│   │   run.py
+│   │
+│   └───templates
+│           go.html
+│           master.html
+│
+├───assets
+│       class_imbalance.png
+│       fine-tuning.png
+│       front_end.png
+│       message_inference.png
+│       wordcloud.png
+│
+├───data
+│       DisasterResponse.db
+│       disaster_categories.csv
+│       disaster_messages.csv
+│       process_data.py
+│
+└───models
+        classifier.pk
+        model_performance.png
+        train_classifier.py
+'''
 
 4. Class imbalance issue
 
