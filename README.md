@@ -57,11 +57,18 @@ The project folder structure is as follows:
 
 4. Binary label imbalance issue
 
-The dataset has a large imbalance with the 4 top labels representing over 95% of the messages. This is detrimental during training step since a model will see a majority of these top class samples and much less from those under-represented. This label imbalance issue is weel described in this [article](https://medium.com/thecyphy/handling-data-imbalance-in-multi-label-classification-mlsmote-531155416b87).
+The dataset suffers large imbalance issues:
+- The top 5 labels representing over 60% of all positive labels (label=1). This means that the majority of labels have very few messages tagged, ie representing these labels.
+
+![](./assets/label_imbalance.png)
+
+- The number of positive labels is minimal for most of the labels with only a few exceptions. The label "related" shows the opposite situation with close to 80% positives. This means that circa 80% of the messages are tagged with "related" making it a "safe bet" for any classification model.
 
 ![](./assets/class_imbalance.png)
 
-The error rate on these under-represented labels is expected to be high. Trained model performance is therefore measured on each of the 36 labels. To minimize this issue, data augmentation is performed on the labels with less than 1,000 available samples. Data augmentation was performed using NLPAug package which allows to produce additional text samples by replacing certain words with synonyms. An illustration is shown below:
+This is detrimental during training since a model will see a majority of these top samples and much less from those under-represented. This label imbalance issue is well described in this [article](https://medium.com/thecyphy/handling-data-imbalance-in-multi-label-classification-mlsmote-531155416b87).
+
+The error rate on these under-represented labels is expected to be high. Trained model performance is therefore measured on each of the 36 labels separately using F1 score. To minimize this issue, data augmentation is performed on the labels with less than 1,000 available samples. Data augmentation is performed using NLPAug package which produces additional text samples by replacing words with synonyms. An illustration is shown below:
 
 Original:
 - `UN reports Leogane 80-90 destroyed. Only Hospital St. Croix functioning. Needs supplies desperately.`
@@ -71,7 +78,7 @@ Augmented Text:
 - `united nations account Leogane eighty - ninety destroyed. Solely Infirmary St. Croix functioning. Needs supplies desperately.`
 - `UN reports Leogane eighty - ninety destroyed. Only Infirmary St. Croix operate. Needs provision desperately.`
 
-After data augmentation, our dataset increases to 29,750 samples.
+Only one augmentation step is performed. While the objective is to improve performance for low-represented labels, we do not want to introduce biais by oversampling a small set of messages. After data augmentation, our dataset increases to 29,750 samples.
 
 An alternative to data augmentation would be to use a reduce dataset with equal proportion of labels. However since some labels have so few samples, this would imply reducing the dataset a lot resulting in the loss of massive training information.
 
