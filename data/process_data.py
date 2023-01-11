@@ -51,6 +51,9 @@ def clean_data(messages, categories):
     # drop duplicates
     df = df.drop_duplicates()
 
+    # drop the few samples with "related"=2 to make it binary variable
+    df = df.drop(df[df.related==2].index)
+
     # return clean consolidated dataset
     return df
 
