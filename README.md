@@ -13,8 +13,8 @@ The app therefore allows to redirect messages to the appropriate first-line emer
 2. Dataset used for model training
 
 The datasets used for training the model has been provided by [Appen](https://www.figure-eight.com/) (formally Figure 8). The datasets are composed of :
-    - a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
-    - a categories dataset tagging each message along 36 labels (classification classes).
+- a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
+- a categories dataset tagging each message along 36 labels (classification classes).
 
 
 3. Architecture of the project
