@@ -78,7 +78,7 @@ Augmented Text:
 - `united nations account Leogane eighty - ninety destroyed. Solely Infirmary St. Croix functioning. Needs supplies desperately.`
 - `UN reports Leogane eighty - ninety destroyed. Only Infirmary St. Croix operate. Needs provision desperately.`
 
-Only one augmentation step is performed. While the objective is to improve performance for low-represented labels, we do not want to introduce biais by oversampling a small set of messages. After data augmentation, our dataset increases to 29,750 samples.
+5 augmentation steps are performed over the under-represented data, ie 5 new samples are created for each original sample. While the objective is to improve performance for low-represented labels, we should be careful not to introduce bias by oversampling a small set of messages. After data augmentation, our dataset increases to over 43,600 samples.
 
 An alternative to data augmentation would be to use a reduce dataset with equal proportion of labels. However since some labels have so few samples, this would imply reducing the dataset a lot resulting in the loss of massive training information.
 
@@ -98,7 +98,7 @@ The training pipeline was therefore composed of:
 - GridSearch hyperparameter tuning (n_estimators, max_depth)
 - Training for Multi-label Classification task. In this type of classification problem the target variable has more than one dimension where each dimension is binary i.e. contain only two distinct values (0 or 1).
 
-Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with data augmentation (last column to the right).
+Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with 5 data augmentation steps (last column to the right).
 
 ![](./assets/fine-tuning.png)
 
