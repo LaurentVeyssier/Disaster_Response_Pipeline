@@ -27,12 +27,12 @@ The dataset has a large class imbalance with the 4 top labels representing over 
 
 To minimize this issue, data augmentation was performed on the labels with less than 1,000 available samples. Data augmentation was performed using NLPAug package which allows to produce additional text samples by replacing certain words with synonyms. An illustration is shown below:
 
-`Original:
-- UN reports Leogane 80-90 destroyed. Only Hospital St. Croix functioning. Needs supplies desperately.
+Original:
+- `UN reports Leogane 80-90 destroyed. Only Hospital St. Croix functioning. Needs supplies desperately.`
 Augmented Text:
-- united nations reports Leogane fourscore - 90 destroyed. But Infirmary St. Croix functioning. Needs supplies desperately.
-- united nations account Leogane eighty - ninety destroyed. Solely Infirmary St. Croix functioning. Needs supplies desperately.
-- UN reports Leogane eighty - ninety destroyed. Only Infirmary St. Croix operate. Needs provision desperately.`
+- `united nations reports Leogane fourscore - 90 destroyed. But Infirmary St. Croix functioning. Needs supplies desperately.`
+- `united nations account Leogane eighty - ninety destroyed. Solely Infirmary St. Croix functioning. Needs supplies desperately.`
+- `UN reports Leogane eighty - ninety destroyed. Only Infirmary St. Croix operate. Needs provision desperately.`
 
 An alternative to data augmentation would be to use a reduce dataset with equal proportion of labels. However since some labels have so few samples, this would imply reducing the dataset a lot resulting in the loss of massive training information.
 
