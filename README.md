@@ -23,44 +23,33 @@ The datasets used for training the model has been provided by [Appen](https://ww
     - Flask Web App: The flask app provides a classification inference API using the trained model
 
 ```
-│   .gitignore
-│   categories.csv
-│   commands.docx
-│   ETL Pipeline Preparation.ipynb
-│   LICENSE
-│   messages.csv
-│   ML Pipeline Preparation.ipynb
 │   README.md
 │   requirements.txt
-│   Twitter-sentiment-self-drive-DFE.csv
-│
-├───.ipynb_checkpoints
-│       ML Pipeline Preparation-checkpoint.ipynb
+│   ETL Pipeline Preparation.ipynb  # preparation notebook with data exploration
+│   ML Pipeline Preparation.ipynb   # preparation notebook with training and feature engineering tests
+│   categories.csv                  # training data to process
+│   messages.csv                    # training data to process
+│   LICENSE
 │
 ├───app
-│   │   run.py
+│   │   run.py                       # script to run the flask API
 │   │
 │   └───templates
-│           go.html
-│           master.html
+│           go.html                  # main page of web app
+│           master.html              # classification result page of web app
 │
-├───assets
-│       class_imbalance.png
-│       fine-tuning.png
-│       front_end.png
-│       message_inference.png
-│       wordcloud.png
+├───assets                           # folder with figures for display
 │
 ├───data
-│       DisasterResponse.db
-│       disaster_categories.csv
-│       disaster_messages.csv
-│       process_data.py
+│       DisasterResponse.db          # sql database to store cleaned data
+│       disaster_categories.csv      # data to process
+│       disaster_messages.csv        # data to process
+│       process_data.py              # script to clean and save datasets
 │
 └───models
-        classifier.pk
+        classifier.pk                # saved trained model
         model_performance.png
-        train_classifier.py
+        train_classifier.py          # script to train the model
 ```
 
 4. Class imbalance issue
