@@ -1,6 +1,6 @@
 # Disaster Response Pipeline Project
 
-!()[./assets/wordcloud.png]
+![](./assets/wordcloud.png)
 
 1. Project overview
 
@@ -23,7 +23,7 @@ The datasets used for training the model has been provided by [Appen](https://ww
 4. Class imbalance issue
 The dataset has a large class imbalance with the 4 top labels representing over 95% of the messages. This is detrimental during training step since a model will see a majority of these top class samples and much less from those under-represented. The error rate on these under-represented classes is expected to be high. Trained model performance is therefore measured on each of the 36 classes.
 
-!()[./assets/class_imbalance.png]
+![](./assets/class_imbalance.png)
 
 To minimize this issue, data augmentation was performed on the labels with less than 1,000 available samples. Data augmentation was performed using NLPAug package which allows to produce additional text samples by replacing certain words with synonyms. An illustration is shown below:
 
@@ -49,7 +49,7 @@ The training pipeline was therefore composed of:
 
 Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with data augmentation (last column to the right).
 
-!()[./assets/fine-tunings.png]
+![](./assets/fine-tunings.png)
 
 6. Front-end API
 The front-end displays some insights extratced from the dataset.
@@ -57,7 +57,7 @@ The front-end displays some insights extratced from the dataset.
 - class imbalance overview
 - message inference (illustration below)
 
-!()[./assets/message_inference.png]
+![](./assets/message_inference.png)
 
 7. Environment set-up
 The project runs in a virtual environment using python 3.8 and the python packages provided in the requirements.txt file
@@ -77,4 +77,4 @@ The project runs in a virtual environment using python 3.8 and the python packag
     4. Click to open the browser at the API specified address
 
 
-!()[./assets/front_end.png]
+![](./assets/front_end.png)
