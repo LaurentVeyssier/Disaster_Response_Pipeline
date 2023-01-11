@@ -14,7 +14,7 @@ The app therefore allows to redirect messages to the appropriate first-line emer
 
 The datasets used for training the model has been provided by [Appen](https://www.figure-eight.com/) (formally Figure 8). The datasets are composed of :
 - a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
-- a categories dataset tagging each message along 36 labels (classification classes).
+- a categories dataset tagging each message along 36 binary labels (for classification).
 
 
 3. Architecture of the project
@@ -54,13 +54,13 @@ The project folder structure is as follows:
         train_classifier.py          # script to train the model
 ```
 
-4. Class imbalance issue
+4. Binary label imbalance issue
 
-The dataset has a large class imbalance with the 4 top labels representing over 95% of the messages. This is detrimental during training step since a model will see a majority of these top class samples and much less from those under-represented. The error rate on these under-represented classes is expected to be high. Trained model performance is therefore measured on each of the 36 classes.
+The dataset has a large imbalance with the 4 top labels representing over 95% of the messages. This is detrimental during training step since a model will see a majority of these top class samples and much less from those under-represented. This label imbalance issue is weel described in this [article](https://medium.com/thecyphy/handling-data-imbalance-in-multi-label-classification-mlsmote-531155416b87).
 
 ![](./assets/class_imbalance.png)
 
-To minimize this issue, data augmentation was performed on the labels with less than 1,000 available samples. Data augmentation was performed using NLPAug package which allows to produce additional text samples by replacing certain words with synonyms. An illustration is shown below:
+The error rate on these under-represented labels is expected to be high. Trained model performance is therefore measured on each of the 36 labels. To minimize this issue, data augmentation is performed on the labels with less than 1,000 available samples. Data augmentation was performed using NLPAug package which allows to produce additional text samples by replacing certain words with synonyms. An illustration is shown below:
 
 Original:
 - `UN reports Leogane 80-90 destroyed. Only Hospital St. Croix functioning. Needs supplies desperately.`
@@ -80,11 +80,11 @@ During preparation, XGBoost demonstrated higher performance compared to ramdomfo
 - use of `genre` categorical variable. each message has this information. There are 3 sources: 'news', 'social' or 'direct'. I would have expected this could add classification information but the data analysis performed during ETL did not show any particular correlation with specific labels.
 - messages starting with a verb
 
-The data augmentation improved performance significantly on the under-represented classes.
+The data augmentation improved performance significantly on the under-represented binary labels.
 
 The training pipeline was therefore composed of:
-- data augmentation on less represented classes
-- tokenization and vectorization using tfIdf. paramters were set at min 3 occurences and lax 10,000 features to prevent memory issues and reduce training time without noticeable performance deterioration
+- data augmentation on less represented labels
+- tokenization and vectorization using tfIdf. parameters were set at min 3 occurences and lax 10,000 features to prevent memory issues and reduce training time without noticeable performance deterioration
 - GridSearch hyperparameter tuning (n_estimators, max_depth)
 - Training for Multi-label Classification task. In this type of classification problem the target variable has more than one dimension where each dimension is binary i.e. contain only two distinct values (0 or 1).
 
@@ -97,7 +97,7 @@ Below is the overview of model performance in the various testing conditions. Sa
 
 The front-end displays some insights extratced from the dataset.
     - wordcloud using most frequent words in the messages dataset. I used my tokenization step from production.
-    - class imbalance overview
+    - Label imbalance overview
     - message inference (illustration below)
 
 ![](./assets/message_inference.png)
