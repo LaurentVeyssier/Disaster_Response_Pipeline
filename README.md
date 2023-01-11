@@ -22,7 +22,7 @@ The datasets used for training the model has been provided by [Appen](https://ww
     - ML pipeline: Loads data from SQLite database. Segregate into train and test sets, Builds a text processing and machine learning pipeline, trains and fine-tunes a model using GridSearchCV, evaluates model performance and export final model as pickle file
     - Flask Web App: The flask app provides a classification inference API using the trained model
 
-'''
+```
 │   .gitignore
 │   categories.csv
 │   commands.docx
@@ -61,7 +61,7 @@ The datasets used for training the model has been provided by [Appen](https://ww
         classifier.pk
         model_performance.png
         train_classifier.py
-'''
+```
 
 4. Class imbalance issue
 
