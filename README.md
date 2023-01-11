@@ -7,7 +7,7 @@
 This is the second project of [Udacity's Data Scientist Nanodegree](https://www.udacity.com/course/data-scientist-nanodegree--nd025).
 The project's objective is design a ML application supporting Disaster Emergency Response API. Tha app is composed of the following:
 - front-end API where disaster messages can be submitted for classification inference
-- back-end leveraging a trained classifier model. The model tags the message along 36 different labels such as 'Food', 'Water', 'Medical support', 'Request (for)'
+- back-end leveraging a trained classifier model for a Multi-label Classification task. The model tags the message along 36 different binary labels such as 'Food', 'Water', 'Medical support', 'Request (for)'
 The app therefore allows to redirect messages to the appropriate first-line emergency response bodies.
 
 2. Dataset used for model training
@@ -86,6 +86,7 @@ The training pipeline was therefore composed of:
 - data augmentation on less represented classes
 - tokenization and vectorization using tfIdf. paramters were set at min 3 occurences and lax 10,000 features to prevent memory issues and reduce training time without noticeable performance deterioration
 - GridSearch hyperparameter tuning (n_estimators, max_depth)
+- Training for Multi-label Classification task. In this type of classification problem the target variable has more than one dimension where each dimension is binary i.e. contain only two distinct values (0 or 1).
 
 Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with data augmentation (last column to the right).
 
