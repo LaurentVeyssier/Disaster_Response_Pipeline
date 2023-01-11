@@ -133,3 +133,5 @@ The project runs in a virtual environment using python 3.8 and the python packag
     4. Click to open the browser at the API specified address
 
 ![](./assets/front_end.png)
+
+![](./assets/message_inference2.png)
