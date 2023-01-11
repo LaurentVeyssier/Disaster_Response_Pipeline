@@ -11,6 +11,7 @@ The project's objective is design a ML application supporting Disaster Emergency
 The app therefore allows to redirect messages to the appropriate first-line emergency response bodies.
 
 2. Dataset used for model training
+
 The datasets used for training the model has been provided by [Appen](https://www.figure-eight.com/) (formally Figure 8). The datasets are composed of :
     - a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
     - a categories dataset tagging each message along 36 labels (classification classes).
@@ -61,6 +62,7 @@ Below is the overview of model performance in the various testing conditions. Sa
 
 
 6. Front-end API
+
 The front-end displays some insights extratced from the dataset.
     - wordcloud using most frequent words in the messages dataset. I used my tokenization step from production.
     - class imbalance overview
