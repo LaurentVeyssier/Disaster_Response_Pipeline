@@ -7,7 +7,7 @@ from sqlalchemy import create_engine
 import matplotlib.pyplot as plt
 
 # for modeling tasks
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import confusion_matrix, classification_report, f1_score
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
 from sklearn.pipeline import Pipeline, FeatureUnion
@@ -121,7 +121,24 @@ def build_model():
                          ('modelisation',
                           MultiOutputClassifier(estimator=XGBClassifier(),
                                                 n_jobs=-1))])
-    return pipeline
+
+    # specify parameters for grid search
+    parameters = {  #'tokenization__ngram_range':[(1,1),(1,2)],
+                    #'vectorization__use_idf':[True, False],
+                    #'vectorization__sublinear_tf':[True,False],
+                    'modelisation__estimator__n_estimators':[150,200,300],
+                    'modelisation__estimator__max_depth':[5,7,10],
+                
+                }
+
+    cv = GridSearchCV(  pipeline,
+                        param_grid=parameters, 
+                        verbose=0, 
+                        n_jobs=-1, 
+                        cv=3
+                        )
+
+    return cv
 
 
 def evaluate_model(model, x, y, category_names, display_perf=False):
