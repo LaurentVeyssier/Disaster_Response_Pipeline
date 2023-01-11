@@ -1,4 +1,7 @@
-import json, io, base64, re
+import json
+import io
+import base64
+import re
 import plotly
 import pandas as pd
 from collections import Counter
@@ -19,6 +22,7 @@ from sqlalchemy import create_engine
 stop_words = stopwords.words("english")
 
 app = Flask(__name__)
+
 
 def tokenize(text):
     text = re.sub(r'[^a-zA-Z0-9]', ' ', text.lower())
@@ -47,18 +51,18 @@ model = joblib.load("../models/classifier.pk")
 @app.route('/')
 @app.route('/index')
 def index():
-    
+
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
 
     # prepare class imbalance visual from dataset
-    label_vectors = df.select_dtypes(include=['int64']).iloc[:,1:]
+    label_vectors = df.select_dtypes(include=['int64']).iloc[:, 1:]
     label_counts = label_vectors.sum(axis=0).sort_values(ascending=False)
-    labels_proportion = (label_counts/len(label_vectors)*100).round(1)
+    labels_proportion = (label_counts / len(label_vectors) * 100).round(1)
     label_names = label_vectors.columns.tolist()
-    
+
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -100,19 +104,19 @@ def index():
         },
 
     ]
-    
+
     # encode plotly graphs in JSON
     ids = ["graph-{}".format(i) for i, _ in enumerate(graphs)]
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
-    
+
     # prepare wordcloud from dataset messages
-    counter=Counter()
+    counter = Counter()
     [counter.update(tokenize(m)) for m in df.message]
-    
-    cloud = WordCloud(  stopwords = stop_words, 
-                        background_color = 'black',
-                        width=2000, height=1000
-                        ).generate_from_frequencies(frequencies=counter)
+
+    cloud = WordCloud(stopwords=stop_words,
+                      background_color='black',
+                      width=2000, height=1000
+                      ).generate_from_frequencies(frequencies=counter)
     plt.imshow(cloud, interpolation="bilinear")
     img = io.BytesIO()
     cloud.to_image().save(img, 'PNG')
@@ -120,20 +124,24 @@ def index():
     plot_url = base64.b64encode(img.getvalue()).decode('utf8')
 
     # render web page with plotly graphs
-    return render_template('master.html', ids=ids, graphJSON=graphJSON, plot_url=plot_url)
+    return render_template(
+        'master.html',
+        ids=ids,
+        graphJSON=graphJSON,
+        plot_url=plot_url)
 
 
 # web page that handles user query and displays model results
 @app.route('/go')
 def go():
     # save user input in query
-    query = request.args.get('query', '') 
+    query = request.args.get('query', '')
 
     # use model to predict classification for query
     classification_labels = model.predict([query])[0]
     classification_results = dict(zip(df.columns[4:], classification_labels))
 
-    # This will render the go.html Please see that file. 
+    # This will render the go.html Please see that file.
     return render_template(
         'go.html',
         query=query,
