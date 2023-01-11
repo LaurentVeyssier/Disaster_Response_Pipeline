@@ -16,6 +16,7 @@ The datasets used for training the model has been provided by [Appen](https://ww
 - a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
 - a categories dataset tagging each message along 36 binary labels (for classification).
 
+Following elimination of duplicates and fixing binary variables performed during ETL, the final dataset retains 26,026 cleaned samples.
 
 3. Architecture of the project
     - ETL pipeline: Loads the datasets, merges and clean data, stores in SQLite database
