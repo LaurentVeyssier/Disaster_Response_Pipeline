@@ -49,11 +49,7 @@ The training pipeline was therefore composed of:
 
 Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with data augmentation (last column to the right).
 
-<<<<<<< HEAD
-![](./assets/fine-tunings.png)
-=======
 ![](./assets/fine-tuning.png)
->>>>>>> 2af48e9844e09cffe42e3276d35d9739853bdc8f
 
 6. Front-end API
 The front-end displays some insights extratced from the dataset.
@@ -80,9 +76,4 @@ The project runs in a virtual environment using python 3.8 and the python packag
 
     4. Click to open the browser at the API specified address
 
-
-<<<<<<< HEAD
 ![](./assets/front_end.png)
-=======
-![](./assets/front_end.png)
->>>>>>> 2af48e9844e09cffe42e3276d35d9739853bdc8f
