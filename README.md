@@ -5,7 +5,7 @@
 1. Project overview
 
 This is the second project of [Udacity's Data Scientist Nanodegree](https://www.udacity.com/course/data-scientist-nanodegree--nd025).
-The project's objective is design a ML application supporting Disaster Emergency Response API. Tha app is composed of the following:
+The project's objective is to design a ML application supporting Disaster Emergency Response API. Tha app is composed of the following:
 - front-end API where disaster messages can be submitted for classification inference
 - back-end leveraging a trained classifier model for a Multi-label Classification task. The model tags the message along 36 different binary labels such as 'Food', 'Water', 'Medical support', 'Request (for)'
 The app therefore allows to redirect messages to the appropriate first-line emergency response bodies.
@@ -13,7 +13,7 @@ The app therefore allows to redirect messages to the appropriate first-line emer
 2. Dataset used for model training
 
 The datasets used for training the model has been provided by [Appen](https://www.figure-eight.com/) (formally Figure 8). The datasets are composed of :
-- a message dataset collected from various sources during past disaster around the globe. It has a total of 26,248 text messages (original language and english translation)
+- a message dataset collected from various sources during past disasters around the globe. It has a total of 26,248 text messages (original language and english translation)
 - a categories dataset tagging each message along 36 binary labels (for classification).
 
 Following elimination of duplicates and fixing binary variables performed during ETL, the final dataset retains 26,026 cleaned samples.
@@ -105,10 +105,10 @@ Below is the overview of model performance in the various testing conditions. Sa
 
 6. Front-end API
 
-The front-end displays some insights extratced from the dataset.
-    - wordcloud using most frequent words in the messages dataset. I used my tokenization step from production.
-    - Label imbalance overview
-    - message inference (illustration below)
+The front-end displays some insights extracted from the dataset.
+- wordcloud using most frequent words in the messages dataset. I used my tokenization step from production.
+- Label imbalance overview
+- message inference (illustration below)
 
 ![](./assets/message_inference.png)
 
