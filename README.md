@@ -44,16 +44,16 @@ An alternative to data augmentation would be to use a reduce dataset with equal 
 5. Training step:
 
 During preparation, XGBoost demonstrated higher performance compared to ramdomforest. GridSearchCV was performed but with minimal improvement over standard parameters. Several feature engineering approaches were tested with minimal performance improvements:
-    - length of the message
-    - use of `genre` categorical variable. each message has this information. There are 3 sources: 'news', 'social' or 'direct'. I would have expected this could add classification information but the data analysis performed during ETL did not show any particular correlation with specific labels.
-    - messages starting with a verb
+- length of the message
+- use of `genre` categorical variable. each message has this information. There are 3 sources: 'news', 'social' or 'direct'. I would have expected this could add classification information but the data analysis performed during ETL did not show any particular correlation with specific labels.
+- messages starting with a verb
 
 The data augmentation improved performance significantly on the under-represented classes.
 
 The training pipeline was therefore composed of:
-    - data augmentation on less represented classes
-    - tokenization and vectorization using tfIdf. paramters were set at min 3 occurences and lax 10,000 features to prevent memory issues and reduce training time without noticeable performance deterioration
-    - GridSearch hyperparameter tuning (n_estimators, max_depth)
+- data augmentation on less represented classes
+- tokenization and vectorization using tfIdf. paramters were set at min 3 occurences and lax 10,000 features to prevent memory issues and reduce training time without noticeable performance deterioration
+- GridSearch hyperparameter tuning (n_estimators, max_depth)
 
 Below is the overview of model performance in the various testing conditions. Saved model is XGBoost with data augmentation (last column to the right).
 
@@ -70,6 +70,7 @@ The front-end displays some insights extratced from the dataset.
 
 
 7. Environment set-up
+
 The project runs in a virtual environment using python 3.8 and the python packages provided in the requirements.txt file
 
 
